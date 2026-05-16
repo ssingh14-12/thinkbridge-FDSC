@@ -111,8 +111,22 @@
       letter-spacing: -0.035em;
       color: var(--hi2);
       margin-bottom: 1.75rem;
+      min-height: 2.4em; /* reserve space while typing */
     }
-    .hero-title span { color: var(--indigo); display: block; }
+    .hero-title .line2 { color: var(--indigo); display: block; }
+
+    /* Typing cursor */
+    .type-cursor {
+      display: inline-block;
+      width: 3px;
+      height: 0.85em;
+      background: var(--indigo);
+      margin-left: 3px;
+      vertical-align: middle;
+      border-radius: 1px;
+      animation: blink 0.9s step-end infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
     .hero-meta {
       display: flex; align-items: center;
@@ -410,9 +424,10 @@
       <span class="hero-co-name">thinkbridge</span>
     </div>
 
-    <h1 class="hero-title r d1">
-      Forward Deployed
-      <span>Solutions Engineer</span>
+    <h1 class="hero-title" id="hero-title">
+      <span id="type-line1"></span>
+      <span class="line2" id="type-line2"></span>
+      <span class="type-cursor" id="type-cursor"></span>
     </h1>
 
     <div class="hero-meta r d2">
@@ -666,10 +681,45 @@
   </div><!-- /modal-split -->
 </div><!-- /overlay -->
 
-<div id="pt" style="display:none;"></div>
 
 <script>
-  /* Scroll reveal */
+  /* ── Typewriter hero title ── */
+  (function() {
+    const line1Text = 'Forward Deployed';
+    const line2Text = 'Solutions Consultant · Engineer';
+    const el1    = document.getElementById('type-line1');
+    const el2    = document.getElementById('type-line2');
+    const cursor = document.getElementById('type-cursor');
+
+    let i = 0;
+    const speed = 55; // ms per character
+
+    function typeNext() {
+      if (i < line1Text.length) {
+        el1.textContent += line1Text[i++];
+        setTimeout(typeNext, speed);
+      } else if (i === line1Text.length) {
+        i++;
+        // Brief pause at line break before starting line 2
+        setTimeout(typeNext, 260);
+      } else {
+        const j = i - line1Text.length - 1;
+        if (j < line2Text.length) {
+          el2.textContent += line2Text[j];
+          i++;
+          setTimeout(typeNext, speed);
+        } else {
+          // Done — stop cursor after short delay
+          setTimeout(() => { cursor.style.animation = 'none'; cursor.style.opacity = '0'; }, 1200);
+        }
+      }
+    }
+
+    // Small delay so page paints first
+    setTimeout(typeNext, 220);
+  })();
+
+  /* ── Scroll reveal ── */
   const io = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('v'); io.unobserve(e.target); } });
   }, { threshold: 0.07, rootMargin: '0px 0px -36px 0px' });
