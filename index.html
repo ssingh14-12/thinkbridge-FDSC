@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Forward Deployed Solutions Engineer — Prepared by Soumya Singh</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Reset & Base ───────────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:       #06060E;
+      --surface:  #0C0C1A;
+      --border:   #16162A;
+      --border2:  #1E1E34;
+      --text:     #E8E8F4;
+      --muted:    #5A5A80;
+      --muted2:   #9090B0;
+      --purple:   #7C3AED;
+      --purple-l: #A78BFA;
+      --cyan:     #00C8E0;
+      --green:    #10B981;
+      --amber:    #F59E0B;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 15px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--cyan); text-decoration: none; }
+
+    /* ── Top Nav ────────────────────────────────────────────────────────────── */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 2rem; height: 52px;
+      background: rgba(6,6,14,0.85);
+      backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-brand { display: flex; align-items: center; gap: 0.6rem; }
+    .nav-logo {
+      width: 28px; height: 28px; border-radius: 7px;
+      background: linear-gradient(135deg, #7C3AED, #00C8E0);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 0.55rem; color: #fff; letter-spacing: -0.5px;
+      font-family: 'Syne', sans-serif;
+    }
+    .nav-name { font-weight: 700; font-size: 0.9rem; color: var(--text); font-family: 'Syne', sans-serif; }
+    .nav-name span { color: var(--purple-l); }
+    .nav-center { font-size: 0.78rem; color: var(--muted); font-weight: 500; }
+    .nav-cta-sm {
+      display: flex; align-items: center; gap: 0.5rem;
+      padding: 0.35rem 0.875rem;
+      background: var(--purple); color: #fff;
+      border: none; border-radius: 8px; cursor: pointer;
+      font-size: 0.75rem; font-weight: 600; font-family: inherit;
+      transition: opacity 0.15s;
+    }
+    .nav-cta-sm:hover { opacity: 0.85; }
+
+    /* ── Page wrapper ───────────────────────────────────────────────────────── */
+    .page { max-width: 860px; margin: 0 auto; padding: 3.5rem 2rem 8rem; }
+
+    /* ── Hero ───────────────────────────────────────────────────────────────── */
+    .hero { margin-bottom: 3rem; }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.25rem 0.75rem 0.25rem 0.4rem;
+      background: rgba(124,58,237,0.1); border: 1px solid rgba(124,58,237,0.25);
+      border-radius: 999px; margin-bottom: 1.25rem;
+    }
+    .hero-eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--purple-l); }
+    .hero-eyebrow-text { font-size: 0.72rem; font-weight: 600; color: var(--purple-l); letter-spacing: 0.04em; }
+    .hero-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.75rem;
+      color: var(--text);
+    }
+    .hero-title .accent { color: var(--purple-l); }
+    .hero-company {
+      font-size: 1.05rem; font-weight: 600; color: var(--muted2);
+      margin-bottom: 1rem;
+    }
+    .hero-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+    .pill {
+      padding: 0.3rem 0.75rem; border-radius: 6px;
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.03em;
+    }
+    .pill-blue   { background: rgba(0,200,224,0.08); color: var(--cyan); border: 1px solid rgba(0,200,224,0.18); }
+    .pill-purple { background: rgba(124,58,237,0.1);  color: var(--purple-l); border: 1px solid rgba(124,58,237,0.2); }
+    .pill-green  { background: rgba(16,185,129,0.08); color: var(--green); border: 1px solid rgba(16,185,129,0.18); }
+    .pill-amber  { background: rgba(245,158,11,0.08); color: var(--amber); border: 1px solid rgba(245,158,11,0.18); }
+    .pill-gray   { background: rgba(90,90,128,0.12);  color: var(--muted2); border: 1px solid var(--border2); }
+    .hero-prepared {
+      display: flex; align-items: center; gap: 0.6rem;
+      padding: 0.6rem 1rem;
+      background: var(--surface); border: 1px solid var(--border2);
+      border-radius: 10px; width: fit-content;
+    }
+    .hero-avatar {
+      width: 30px; height: 30px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--purple), var(--cyan));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 0.65rem; color: #fff; flex-shrink: 0;
+    }
+    .hero-prepared-text { font-size: 0.78rem; }
+    .hero-prepared-name { font-weight: 700; color: var(--text); }
+    .hero-prepared-sub  { color: var(--muted); font-size: 0.72rem; }
+
+    /* ── Section ────────────────────────────────────────────────────────────── */
+    .section { margin-bottom: 2.5rem; }
+    .section-label {
+      font-size: 0.65rem; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 0.12em; color: var(--muted); margin-bottom: 0.875rem;
+    }
+    .section-title {
+      font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700;
+      color: var(--text); margin-bottom: 0.875rem;
+    }
+
+    /* ── Highlighted intro box ──────────────────────────────────────────────── */
+    .intro-box {
+      background: linear-gradient(135deg, rgba(124,58,237,0.07) 0%, rgba(0,200,224,0.04) 100%), var(--surface);
+      border: 1px solid rgba(124,58,237,0.2);
+      border-radius: 16px; padding: 1.5rem 1.75rem;
+      font-size: 0.95rem; color: var(--muted2); line-height: 1.75;
+    }
+    .intro-box strong { color: var(--text); }
+
+    /* ── Responsibility cards ───────────────────────────────────────────────── */
+    .resp-list { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .resp-item {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      padding: 0.875rem 1.125rem;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; transition: border-color 0.15s;
+    }
+    .resp-item:hover { border-color: rgba(124,58,237,0.25); }
+    .resp-icon {
+      width: 28px; height: 28px; border-radius: 7px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem;
+      background: rgba(124,58,237,0.1); border: 1px solid rgba(124,58,237,0.15);
+    }
+    .resp-text { font-size: 0.88rem; color: var(--muted2); line-height: 1.55; padding-top: 3px; }
+    .resp-text strong { color: var(--text); }
+
+    /* ── Qual list ──────────────────────────────────────────────────────────── */
+    .qual-list { display: flex; flex-direction: column; gap: 0.5rem; }
+    .qual-item {
+      display: flex; align-items: flex-start; gap: 0.6rem;
+      font-size: 0.875rem; color: var(--muted2); line-height: 1.5;
+    }
+    .qual-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--purple-l); flex-shrink: 0; margin-top: 8px; }
+    .qual-item strong { color: var(--text); }
+
+    /* ── Own cards ──────────────────────────────────────────────────────────── */
+    .own-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 0.75rem; }
+    .own-card {
+      padding: 1rem 1.125rem;
+      background: var(--surface); border: 1px solid var(--border2);
+      border-radius: 12px;
+    }
+    .own-card-title { font-size: 0.8rem; font-weight: 700; color: var(--text); margin-bottom: 0.3rem; }
+    .own-card-body  { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+
+    /* ── Why box ────────────────────────────────────────────────────────────── */
+    .why-box {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 16px; padding: 1.5rem 1.75rem;
+      font-size: 0.875rem; color: var(--muted2); line-height: 1.75;
+    }
+
+    /* ── Divider ────────────────────────────────────────────────────────────── */
+    .divider { height: 1px; background: var(--border); margin: 2rem 0; }
+
+    /* ── CTA Section ────────────────────────────────────────────────────────── */
+    .cta-section {
+      background: linear-gradient(135deg, rgba(124,58,237,0.08), rgba(0,200,224,0.04)), var(--surface);
+      border: 1px solid rgba(124,58,237,0.2);
+      border-radius: 20px; padding: 2.5rem 2rem; text-align: center;
+    }
+    .cta-title {
+      font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 800;
+      color: var(--text); margin-bottom: 0.5rem; letter-spacing: -0.02em;
+    }
+    .cta-sub { font-size: 0.875rem; color: var(--muted); margin-bottom: 2rem; }
+    .cta-btns { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.825rem 1.75rem;
+      background: var(--purple); color: #fff;
+      border: none; border-radius: 12px; cursor: pointer;
+      font-size: 0.9rem; font-weight: 700; font-family: inherit;
+      transition: box-shadow 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { box-shadow: 0 0 0 2px rgba(124,58,237,0.4), 0 0 32px rgba(124,58,237,0.3); transform: translateY(-1px); }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.825rem 1.75rem;
+      background: transparent; color: var(--cyan);
+      border: 1px solid rgba(0,200,224,0.3); border-radius: 12px; cursor: pointer;
+      font-size: 0.9rem; font-weight: 700; font-family: inherit;
+      transition: background 0.15s, box-shadow 0.2s, transform 0.15s;
+    }
+    .btn-outline:hover { background: rgba(0,200,224,0.06); box-shadow: 0 0 0 1px rgba(0,200,224,0.3); transform: translateY(-1px); }
+
+    /* ── Modal overlay ──────────────────────────────────────────────────────── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; z-index: 200;
+      background: rgba(3,3,10,0.85); backdrop-filter: blur(8px);
+      animation: fadeIn 0.2s ease;
+    }
+    .modal-overlay.open { display: flex; flex-direction: column; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    .modal-topbar {
+      height: 52px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 1.5rem;
+      background: rgba(12,12,26,0.95);
+      border-bottom: 1px solid var(--border);
+    }
+    .modal-topbar-label { font-size: 0.8rem; font-weight: 600; color: var(--muted2); }
+    .modal-close {
+      padding: 0.35rem 0.875rem;
+      background: rgba(255,255,255,0.05); border: 1px solid var(--border2);
+      border-radius: 7px; color: var(--muted2); cursor: pointer;
+      font-size: 0.78rem; font-family: inherit; font-weight: 600;
+      transition: background 0.15s;
+    }
+    .modal-close:hover { background: rgba(255,255,255,0.1); color: var(--text); }
+
+    .modal-body {
+      flex: 1; display: flex; overflow: hidden;
+      animation: slideUp 0.25s cubic-bezier(0.4,0,0.2,1);
+    }
+    @keyframes slideUp { from { transform: translateY(16px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+    /* ── Split panes ────────────────────────────────────────────────────────── */
+    .split-pane {
+      flex: 1; overflow-y: auto; padding: 2rem;
+      scrollbar-width: thin; scrollbar-color: var(--border2) transparent;
+    }
+    .split-pane::-webkit-scrollbar { width: 5px; }
+    .split-pane::-webkit-scrollbar-track { background: transparent; }
+    .split-pane::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+
+    .pane-left {
+      background: var(--surface); border-right: 1px solid var(--border);
+      max-width: 46%;
+    }
+    .pane-right { background: #f5f5f5; max-width: 54%; }
+
+    .pane-label {
+      font-size: 0.62rem; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 0.12em; color: var(--muted); margin-bottom: 1.25rem;
+    }
+
+    /* JD summary in left pane */
+    .pane-jd-title { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 800; color: var(--text); margin-bottom: 0.25rem; }
+    .pane-jd-co    { font-size: 0.85rem; color: var(--muted2); margin-bottom: 1.25rem; }
+    .pane-jd-section { margin-bottom: 1.25rem; }
+    .pane-jd-heading { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); margin-bottom: 0.5rem; border-bottom: 1px solid var(--border); padding-bottom: 0.3rem; }
+    .pane-jd-list  { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+    .pane-jd-list li { display: flex; gap: 0.5rem; font-size: 0.8rem; color: var(--muted2); line-height: 1.4; }
+    .pane-jd-list li::before { content: "•"; color: var(--purple-l); flex-shrink: 0; }
+
+    /* ── Resume in right pane (Times New Roman template) ────────────────────── */
+    .resume-paper {
+      background: #ffffff; color: #000000;
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 10.5pt; line-height: 1.3;
+      padding: 0.6in 0.75in;
+      box-shadow: 0 2px 32px rgba(0,0,0,0.25);
+      min-width: 0;
+    }
+    .r-header { text-align: center; margin-bottom: 4pt; }
+    .r-name   { font-size: 18pt; font-weight: 700; margin: 0 0 1pt; letter-spacing: 0.01em; }
+    .r-contact { font-size: 9pt; color: #111; margin: 0 0 1pt; }
+    .r-tagline { font-size: 9.5pt; font-weight: 700; margin: 0; }
+    .r-section { margin-top: 7pt; }
+    .r-heading {
+      font-size: 10pt; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.03em; border-bottom: 1pt solid #000;
+      padding-bottom: 1pt; margin: 0 0 4pt;
+    }
+    .r-edu-entry { margin-bottom: 4pt; }
+    .r-row { display: flex; justify-content: space-between; align-items: baseline; gap: 0.5rem; }
+    .r-school  { font-weight: 700; font-size: 10.5pt; }
+    .r-city    { font-size: 10pt; white-space: nowrap; flex-shrink: 0; }
+    .r-degree  { font-style: italic; font-size: 10pt; }
+    .r-dates   { font-size: 10pt; white-space: nowrap; flex-shrink: 0; }
+    .r-job { margin-bottom: 5pt; }
+    .r-job-title { font-size: 10.5pt; font-weight: 700; flex: 1; }
+    .r-job-sep   { font-weight: 400; }
+    .r-job-loc   { font-weight: 400; }
+    .r-job-date  { font-size: 10pt; white-space: nowrap; flex-shrink: 0; font-weight: 400; }
+    .r-bullets   { margin: 1pt 0 0 14pt; padding: 0; list-style: disc; }
+    .r-bullets li { font-size: 10pt; margin-bottom: 1pt; line-height: 1.3; }
+    .r-project   { margin-bottom: 4pt; }
+    .r-proj-name { font-size: 10.5pt; font-weight: 700; flex: 1; }
+    .r-proj-date { font-size: 10pt; white-space: nowrap; flex-shrink: 0; font-weight: 400; }
+    .r-skills    { display: flex; flex-direction: column; gap: 1pt; }
+    .r-skill-line { font-size: 10pt; margin: 0; line-height: 1.35; }
+    .r-cert-row  { display: flex; justify-content: space-between; align-items: baseline; gap: 0.5rem; margin-bottom: 1.5pt; }
+    .r-cert-name { font-size: 10pt; font-weight: 700; flex: 1; }
+    .r-cert-date { font-size: 10pt; white-space: nowrap; flex-shrink: 0; font-weight: 400; }
+
+    /* ── Modal download button ─────────────────────────────────────────────── */
+    .modal-dl-btn {
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      margin: 1rem auto 0; padding: 0.65rem 1.5rem;
+      background: var(--purple); color: #fff;
+      border: none; border-radius: 10px; cursor: pointer;
+      font-size: 0.82rem; font-weight: 700; font-family: inherit;
+      transition: opacity 0.15s;
+    }
+    .modal-dl-btn:hover { opacity: 0.85; }
+
+    /* ── Print: only show resume ────────────────────────────────────────────── */
+    @media print {
+      body > *:not(#print-resume) { display: none !important; }
+      #print-resume {
+        display: block !important;
+        background: #fff; color: #000;
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 10.5pt; line-height: 1.3;
+        padding: 0;
+      }
+      #print-resume .resume-paper { box-shadow: none; padding: 0.55in 0.7in; }
+      @page { margin: 0.45in; size: letter portrait; }
+    }
+
+    /* ── Misc animation ─────────────────────────────────────────────────────── */
+    .fade-up { animation: fadeUp 0.5s ease both; }
+    .fade-up:nth-child(2) { animation-delay: 0.08s; }
+    .fade-up:nth-child(3) { animation-delay: 0.16s; }
+    .fade-up:nth-child(4) { animation-delay: 0.24s; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body>
+
+  <!-- ── Nav ── -->
+  <nav class="nav">
+    <div class="nav-brand">
+      <div class="nav-logo">SS</div>
+      <span class="nav-name">Soumya <span>Singh</span></span>
+    </div>
+    <span class="nav-center">Forward Deployed Solutions Engineer · thinkbridge</span>
+    <button class="nav-cta-sm" onclick="openModal()">Preview Resume →</button>
+  </nav>
+
+  <!-- ── Page ── -->
+  <div class="page">
+
+    <!-- Hero -->
+    <div class="hero fade-up">
+      <div class="hero-eyebrow">
+        <span class="hero-eyebrow-dot"></span>
+        <span class="hero-eyebrow-text">Opportunity · thinkbridge</span>
+      </div>
+      <h1 class="hero-title">Forward Deployed<br /><span class="accent">Solutions Engineer</span></h1>
+      <p class="hero-company">thinkbridge — Global Digital Product Development</p>
+      <div class="hero-pills">
+        <span class="pill pill-blue">Full-Time</span>
+        <span class="pill pill-purple">Mid-Level · 3-5 yrs</span>
+        <span class="pill pill-green">Remote-First</span>
+        <span class="pill pill-amber">Austin, TX</span>
+        <span class="pill pill-gray">Up to 30% Travel</span>
+      </div>
+      <div class="hero-prepared">
+        <div class="hero-avatar">SS</div>
+        <div>
+          <div class="hero-prepared-name">Prepared by Soumya Singh, PMP, CSPO</div>
+          <div class="hero-prepared-sub">In response to a conversation with thinkbridge founders · May 2026</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- About the Role -->
+    <div class="section fade-up">
+      <div class="section-label">About the Role</div>
+      <div class="intro-box">
+        We are hiring a <strong>Forward Deployed Solutions Engineer</strong> to work directly with mid-market customers, understand their workflows, and deliver working prototypes that solve real operational problems. You will sit between the customer and our engineering team, <strong>translating business needs into shippable solutions using AI-native tools</strong>.
+        <br /><br />
+        This is a customer-facing, hands-on role for someone who can move from <strong>discovery to working prototype quickly</strong>, then hand off to engineering for production build. No one at thinkbridge has held this title before — you will define what it means.
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Responsibilities -->
+    <div class="section fade-up">
+      <div class="section-label">Key Responsibilities</div>
+      <ul class="resp-list">
+        <li class="resp-item">
+          <div class="resp-icon">🔍</div>
+          <div class="resp-text"><strong>Deep Customer Discovery</strong> — Conduct discovery sessions with stakeholders from frontline operators to C-suite, mapping pain points, workflows, and business priorities in 1-week sprint cycles.</div>
+        </li>
+        <li class="resp-item">
+          <div class="resp-icon">🗺️</div>
+          <div class="resp-text"><strong>Process Design</strong> — Map current-state processes and design future-state workflows using process diagrams, data flow models, and user journey maps.</div>
+        </li>
+        <li class="resp-item">
+          <div class="resp-icon">⚡</div>
+          <div class="resp-text"><strong>AI-Native Prototyping</strong> — Build functional prototypes using Claude, Cursor, v0, and Lovable — compressing the discovery-to-prototype cycle from months to days.</div>
+        </li>
+        <li class="resp-item">
+          <div class="resp-icon">📄</div>
+          <div class="resp-text"><strong>Technical Specification Authoring</strong> — Write BRDs, FRDs, and OpenAPI specs that engineering teams can build from without ambiguity or back-and-forth.</div>
+        </li>
+        <li class="resp-item">
+          <div class="resp-icon">🤝</div>
+          <div class="resp-text"><strong>Engineering Handoff & Partnership</strong> — Collaborate with engineering during production build to ensure prototype intent translates cleanly into delivery.</div>
+        </li>
+        <li class="resp-item">
+          <div class="resp-icon">📊</div>
+          <div class="resp-text"><strong>Stakeholder Communication</strong> — Communicate trade-offs, timelines, and risks clearly to both technical and business audiences — from developer to CEO.</div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Qualifications -->
+    <div class="section fade-up">
+      <div class="section-label">Required Qualifications</div>
+      <div class="qual-list">
+        <div class="qual-item"><div class="qual-dot"></div>3-5 years combined experience in <strong>business process analysis, product management, solutions consulting, or implementation consulting</strong></div>
+        <div class="qual-item"><div class="qual-dot"></div>Degree in Computer Science, Engineering, Business, or related field (Master's preferred)</div>
+        <div class="qual-item"><div class="qual-dot"></div><strong>Demonstrated AI tool experience</strong> — Claude API, OpenAI, Cursor, or equivalent; portfolio of AI-built artifacts preferred</div>
+        <div class="qual-item"><div class="qual-dot"></div>Strong process design skills: <strong>BRDs, FRDs, UML diagrams, data mapping, current- and future-state workflow modeling</strong></div>
+        <div class="qual-item"><div class="qual-dot"></div>Experience facilitating stakeholder workshops and translating business requirements into technical specifications</div>
+        <div class="qual-item"><div class="qual-dot"></div>Comfortable operating in <strong>ambiguous, fast-moving environments with dynamic objectives</strong> and weekly iteration with users</div>
+      </div>
+
+      <div style="margin-top: 1.5rem;">
+        <div class="section-label">Preferred Qualifications</div>
+        <div class="qual-list">
+          <div class="qual-item"><div class="qual-dot"></div>Hands-on experience with no-code automation tools: Zapier, Airtable, Make, n8n</div>
+          <div class="qual-item"><div class="qual-dot"></div>Familiarity with mid-market CRM/ERP: Salesforce, Workday, SAP, Zoho</div>
+          <div class="qual-item"><div class="qual-dot"></div>Basic SQL or Python for data analysis and prototyping</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- What You'll Own -->
+    <div class="section fade-up">
+      <div class="section-label">What You'll Own</div>
+      <div class="own-grid">
+        <div class="own-card">
+          <div class="own-card-title">End-to-End Customer Relationship</div>
+          <div class="own-card-body">From first discovery call through prototype handoff — you own the relationship, not just a phase of it.</div>
+        </div>
+        <div class="own-card">
+          <div class="own-card-title">Spec Quality</div>
+          <div class="own-card-body">Every BRD and FRD that goes to engineering carries your name. Zero ambiguity is the standard.</div>
+        </div>
+        <div class="own-card">
+          <div class="own-card-title">Pattern Library</div>
+          <div class="own-card-body">Contribute reusable discovery frameworks and process templates that scale across every future engagement.</div>
+        </div>
+        <div class="own-card">
+          <div class="own-card-title">Customer Outcomes</div>
+          <div class="own-card-body">Customer satisfaction and adoption results for your engagements. You shipped it — you own what happens next.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Why thinkbridge -->
+    <div class="section fade-up">
+      <div class="section-label">Why thinkbridge</div>
+      <div class="why-box">
+        thinkbridge has spent over a decade building custom operating layers for mid-market companies. With AI tools now mature enough to compress the discovery-to-prototype cycle from months to days, we are expanding our delivery model to include forward-deployed solutions work.
+        <br /><br />
+        This role is central to that expansion. You will have direct access to founders, full AI tooling access, and the opportunity to define a new function from scratch — with the backing of an engineering team and a decade of customer relationships behind you.
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-section fade-up">
+      <div class="cta-title">Prepared by Soumya Singh</div>
+      <p class="cta-sub">PMP · CSPO · AZ-900 · MS Engineering Management, UT Austin</p>
+      <div class="cta-btns">
+        <button class="btn-primary" onclick="openModal()">
+          <span>⊞</span> Preview My Resume
+        </button>
+        <button class="btn-outline" onclick="downloadPDF()">
+          <span>↓</span> Download Resume PDF
+        </button>
+      </div>
+    </div>
+
+  </div><!-- /page -->
+
+
+  <!-- ══════════════════════════════════════════════════════════════════════════
+       MODAL: Side-by-side JD + Resume preview
+  ═══════════════════════════════════════════════════════════════════════════ -->
+  <div class="modal-overlay" id="modal">
+    <div class="modal-topbar">
+      <span class="modal-topbar-label">JD + Resume — Forward Deployed Solutions Engineer · thinkbridge</span>
+      <button class="modal-close" onclick="closeModal()">✕ Close</button>
+    </div>
+    <div class="modal-body">
+
+      <!-- Left pane: JD summary -->
+      <div class="split-pane pane-left">
+        <div class="pane-label">Job Description</div>
+        <div class="pane-jd-title">Forward Deployed Solutions Engineer</div>
+        <div class="pane-jd-co">thinkbridge · Austin, TX (Remote-First) · Full-Time</div>
+
+        <div class="pane-jd-section">
+          <div class="pane-jd-heading">About the Role</div>
+          <p style="font-size:0.82rem;color:#9090B0;line-height:1.6;">Customer-facing, hands-on role: discovery → prototype → engineering handoff using AI-native tools. Sits between customer and engineering. No one at thinkbridge has held this title before.</p>
+        </div>
+
+        <div class="pane-jd-section">
+          <div class="pane-jd-heading">Key Responsibilities</div>
+          <ul class="pane-jd-list">
+            <li>Customer discovery: frontline operators to C-suite</li>
+            <li>Current- and future-state process mapping (diagrams, data flows, user journeys)</li>
+            <li>Build prototypes using Claude, Cursor, v0, Lovable</li>
+            <li>Author BRDs, FRDs, OpenAPI specs for engineering</li>
+            <li>Engineering handoff and production partnership</li>
+            <li>Stakeholder communication — trade-offs, timelines, risks</li>
+          </ul>
+        </div>
+
+        <div class="pane-jd-section">
+          <div class="pane-jd-heading">Required</div>
+          <ul class="pane-jd-list">
+            <li>3-5 years: BA, PM, solutions consulting, or implementation</li>
+            <li>Demonstrated AI tool experience (Claude API, Cursor, OpenAI)</li>
+            <li>BRDs, FRDs, UML, data mapping, workflow design</li>
+            <li>Stakeholder workshop facilitation</li>
+            <li>C-suite to engineering communication</li>
+          </ul>
+        </div>
+
+        <div class="pane-jd-section">
+          <div class="pane-jd-heading">Preferred</div>
+          <ul class="pane-jd-list">
+            <li>No-code automation: Zapier, Airtable, Make, n8n</li>
+            <li>CRM/ERP: Salesforce, Workday, SAP, Zoho</li>
+            <li>Basic SQL / Python</li>
+            <li>Portfolio of AI-built artifacts or shipped projects</li>
+          </ul>
+        </div>
+
+        <button class="modal-dl-btn" onclick="downloadPDF()">↓ Download Resume PDF</button>
+      </div>
+
+      <!-- Right pane: Resume -->
+      <div class="split-pane pane-right" id="resume-pane">
+        <div class="resume-paper" id="resume-content">
+
+          <!-- Header -->
+          <div class="r-header">
+            <p class="r-name">Soumya Singh, PMP, CSPO</p>
+            <p class="r-contact">Austin, TX | Open to Relocate &nbsp;|&nbsp; (737) 484-7648 &nbsp;|&nbsp; soumya3436@gmail.com &nbsp;|&nbsp; linkedin.com/in/soumya-ssingh</p>
+            <p class="r-tagline">Forward Deployed Solutions Engineer &nbsp;|&nbsp; AI-Native Prototyping &nbsp;|&nbsp; Process Design &amp; Customer Discovery</p>
+          </div>
+
+          <!-- Education -->
+          <div class="r-section">
+            <h2 class="r-heading">Education</h2>
+            <div class="r-edu-entry">
+              <div class="r-row">
+                <span class="r-school">University of Texas at Austin, Cockrell School of Engineering</span>
+                <span class="r-city">Austin, TX</span>
+              </div>
+              <div class="r-row">
+                <span class="r-degree">Master of Science in Engineering Management</span>
+                <span class="r-dates">Dec 2025</span>
+              </div>
+            </div>
+            <div class="r-edu-entry">
+              <div class="r-row">
+                <span class="r-school">Alliance University, Alliance College of Engineering and Design</span>
+                <span class="r-city">Bengaluru, India</span>
+              </div>
+              <div class="r-row">
+                <span class="r-degree">B.Tech. in Computer Science and Engineering</span>
+                <span class="r-dates">Aug 2020</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Experience -->
+          <div class="r-section">
+            <h2 class="r-heading">Experience</h2>
+
+            <div class="r-job">
+              <div class="r-row">
+                <span class="r-job-title"><strong>Forward Deployed Solutions Analyst</strong><span class="r-job-sep"> | Saayam For All</span><span class="r-job-loc">, Remote</span></span>
+                <span class="r-job-date">Mar 2026 - Present</span>
+              </div>
+              <ul class="r-bullets">
+                <li>Built Job Search AI Platform end-to-end using Claude API, Python, and FastAPI - went from concept to working prototype in 6 weeks, demonstrating the full discovery-to-deployment cycle solo.</li>
+                <li>Defined process flows, BRDs, and OpenAPI specs for a multi-feature AI product; translated business requirements into shippable specs across 3 concurrent workstreams at 90% on-time delivery.</li>
+              </ul>
+            </div>
+
+            <div class="r-job">
+              <div class="r-row">
+                <span class="r-job-title"><strong>Process &amp; Systems Analyst</strong><span class="r-job-sep"> | University of Texas at Austin - Libraries</span><span class="r-job-loc">, Austin, TX</span></span>
+                <span class="r-job-date">Jan 2025 - Dec 2025</span>
+              </div>
+              <ul class="r-bullets">
+                <li>Built a Smartsheet Command Center consolidating schedule, resource capacity, budget, and risk into exec-ready views; automated weekly reporting and improved on-time deliverables by 40%.</li>
+                <li>Reduced rework 42% by documenting data lineage maps and standardized QA checklists across 6,000+ records - adopted org-wide within one quarter of rollout.</li>
+              </ul>
+            </div>
+
+            <div class="r-job">
+              <div class="r-row">
+                <span class="r-job-title"><strong>Solutions Consultant / Business Analyst</strong><span class="r-job-sep"> | Accenture</span><span class="r-job-loc">, Bengaluru, India</span></span>
+                <span class="r-job-date">Dec 2021 - Oct 2023</span>
+              </div>
+              <ul class="r-bullets">
+                <li>Facilitated discovery workshops with 50+ stakeholders across SAP, Salesforce, and Workday implementations; authored BRDs and FRDs for 11+ enterprise releases with zero ambiguity sign-off.</li>
+                <li>Cut escalations 43% by designing issue-triage protocols for onshore and offshore teams; reduced post-release defects 32% through UAT scripts catching integration gaps before go-live.</li>
+                <li>Drove Azure migration delivery by translating business requirements into technical epics in Azure DevOps, improving deployment reliability 30% across 18 months of production builds.</li>
+              </ul>
+            </div>
+
+            <div class="r-job">
+              <div class="r-row">
+                <span class="r-job-title"><strong>Solutions Consultant, Pre-Sales</strong><span class="r-job-sep"> | Zoho Corporation</span><span class="r-job-loc">, Chennai, India</span></span>
+                <span class="r-job-date">Sep 2021 - Nov 2021</span>
+              </div>
+              <ul class="r-bullets">
+                <li>Improved time-to-resolution 13% and customer retention 20% by designing CRM onboarding workflows and reusable process documentation across 1,000+ enterprise cases.</li>
+              </ul>
+            </div>
+
+          </div>
+
+          <!-- Projects -->
+          <div class="r-section">
+            <h2 class="r-heading">Leadership Programs and Projects</h2>
+
+            <div class="r-project">
+              <div class="r-row">
+                <strong class="r-proj-name">Job Search AI Platform - Claude API, Python, FastAPI &amp; React</strong>
+                <span class="r-proj-date">Apr 2026</span>
+              </div>
+              <ul class="r-bullets">
+                <li>Built full-stack AI platform with multi-feature job screening, resume tailoring, and LinkedIn outreach automation - end-to-end from discovery to deployed prototype using Claude API and FastAPI.</li>
+              </ul>
+            </div>
+
+            <div class="r-project">
+              <div class="r-row">
+                <strong class="r-proj-name">Integration Control Center - End-to-End Data Pipeline &amp; Systems Design</strong>
+                <span class="r-proj-date">Mar 2026</span>
+              </div>
+              <ul class="r-bullets">
+                <li>Designed full system from scratch: BRD, FRD, OpenAPI specs, SQL data model, and UAT pack using PostgreSQL, Apache NiFi, and Tableau on the Olist dataset.</li>
+              </ul>
+            </div>
+
+          </div>
+
+          <!-- Skills -->
+          <div class="r-section">
+            <h2 class="r-heading">Skills</h2>
+            <div class="r-skills">
+              <p class="r-skill-line"><strong>AI &amp; Prototyping:</strong> Claude API, Python, FastAPI, Cursor, v0, GitHub Copilot, OpenAI API, Microsoft Copilot</p>
+              <p class="r-skill-line"><strong>Process Design:</strong> BRD / FRD, UML, Process Mapping, Data Flow Diagrams, Current &amp; Future State Design, User Journey Maps</p>
+              <p class="r-skill-line"><strong>Client Delivery:</strong> Discovery Workshops, Stakeholder Facilitation, Requirements Elicitation, Change Management, UAT, Go-Live Readiness</p>
+              <p class="r-skill-line"><strong>Platforms &amp; Tools:</strong> Salesforce CRM, SAP ERP, Workday, Zoho CRM, ServiceNow, Jira, Confluence, Smartsheet, SQL, Power BI, Tableau, Azure DevOps</p>
+            </div>
+          </div>
+
+          <!-- Certifications -->
+          <div class="r-section">
+            <h2 class="r-heading">Certifications</h2>
+            <div class="r-cert-row">
+              <strong class="r-cert-name">Project Management Professional (PMP®), Project Management Institute</strong>
+              <span class="r-cert-date">Oct 2025</span>
+            </div>
+            <div class="r-cert-row">
+              <strong class="r-cert-name">Certified Scrum Product Owner (CSPO®), Scrum Alliance</strong>
+              <span class="r-cert-date">Jun 2025</span>
+            </div>
+            <div class="r-cert-row">
+              <strong class="r-cert-name">Microsoft Certified: Azure Fundamentals (AZ-900), Microsoft</strong>
+              <span class="r-cert-date">Jun 2023</span>
+            </div>
+          </div>
+
+        </div><!-- /resume-paper -->
+      </div><!-- /pane-right -->
+
+    </div><!-- /modal-body -->
+  </div><!-- /modal-overlay -->
+
+
+  <!-- ══ Print target (hidden, only rendered for PDF) ═══════════════════════ -->
+  <div id="print-resume" style="display:none;">
+    <!-- JS copies resume-content here before print -->
+  </div>
+
+
+  <script>
+    function openModal() {
+      document.getElementById('modal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal() {
+      document.getElementById('modal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    // Close on overlay click (but not on content click)
+    document.getElementById('modal').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+    // ESC to close
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    function downloadPDF() {
+      // Copy resume into print target, trigger print
+      const content = document.getElementById('resume-content').outerHTML;
+      const printDiv = document.getElementById('print-resume');
+      printDiv.innerHTML = '<div class="resume-paper">' + document.getElementById('resume-content').innerHTML + '</div>';
+      printDiv.style.display = 'block';
+      setTimeout(function() {
+        window.print();
+        setTimeout(function() { printDiv.style.display = 'none'; }, 500);
+      }, 100);
+    }
+  </script>
+
+</body>
+</html>
