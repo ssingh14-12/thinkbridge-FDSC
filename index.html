@@ -111,7 +111,6 @@
       letter-spacing: -0.035em;
       color: var(--hi2);
       margin-bottom: 1.75rem;
-      min-height: 2.4em; /* reserve space while typing */
     }
     .hero-title .line2 { color: var(--indigo); display: block; }
 
@@ -426,16 +425,13 @@
 
     <h1 class="hero-title" id="hero-title">
       <span id="type-line1"></span>
-      <span class="line2" id="type-line2"></span>
-      <span class="type-cursor" id="type-cursor"></span>
+      <span class="line2" id="type-line2"><span class="type-cursor" id="type-cursor" style="opacity:0;"></span></span>
     </h1>
 
     <div class="hero-meta r d2">
       <span class="hero-meta-item">Full-Time</span>
       <div class="hero-meta-divider"></div>
       <span class="hero-meta-item">Austin, TX · Remote-First</span>
-      <div class="hero-meta-divider"></div>
-      <span class="hero-meta-item">Mid-Level · 3–5 years</span>
     </div>
 
   </div>
@@ -626,7 +622,7 @@
 
   <div class="modal-split">
 
-    <!-- Left: JD summary -->
+    <!-- Left: Full JD -->
     <div class="mpane mpane-left">
       <div class="mpl-head">Job Description</div>
       <div class="mpl-title">Forward Deployed Solutions Engineer</div>
@@ -634,37 +630,42 @@
 
       <div class="mpl-block">
         <div class="mpl-block-head">The Role</div>
-        <p style="font-size:0.78rem;color:#6A6A88;line-height:1.65;">Embed with mid-market customers ($25M–$150M), understand how their business actually runs, and deliver working prototypes that bridge the gap between purchased software and the operating layer they need.</p>
+        <p style="font-size:0.78rem;color:#8888A8;line-height:1.7;">Embed with mid-market customers ($25M–$150M), understand how their business actually runs, and close the gap between the software they bought and the operating layer they need. Apply problem-solving, creativity, and technical skills to translate business needs into shippable prototypes using AI-native tools (Claude, Cursor, etc.), then hand off clean specifications to engineering for production build.</p>
       </div>
 
       <div class="mpl-block">
-        <div class="mpl-block-head">Responsibilities</div>
+        <div class="mpl-block-head">Key Responsibilities</div>
         <ul class="mpl-list">
-          <li>Customer integration: sit in meetings, observe work as it happens</li>
-          <li>Discovery &amp; process design: current-state mapping, future-state design</li>
-          <li>Prototype delivery using Claude, Cursor, etc.</li>
-          <li>Author BRDs, FRDs, technical specs for engineering handoff</li>
-          <li>Stakeholder communication across operators to C-suite</li>
+          <li><strong>Customer Integration</strong> — embed with client teams, sit in their meetings, observe work as it happens</li>
+          <li><strong>Discovery &amp; Process Design</strong> — lead sessions with operators to C-suite, map current-state, design future-state workflows</li>
+          <li><strong>Prototype Delivery</strong> — build functional prototypes using AI-assisted tools (Claude, Cursor, etc.) on fast iteration loops</li>
+          <li><strong>Specification Authoring</strong> — author BRDs, FRDs, and technical specs that engineering can build from without ambiguity</li>
+          <li><strong>Engineering Partnership</strong> — partner during production build to ensure prototype intent translates to delivery</li>
+          <li><strong>Cross-functional Collaboration</strong> — work across technical and non-technical teams in a constantly evolving environment</li>
+          <li><strong>Stakeholder Communication</strong> — communicate trade-offs, timelines, and risks to operators and C-suite</li>
         </ul>
       </div>
 
       <div class="mpl-block">
         <div class="mpl-block-head">Required</div>
         <ul class="mpl-list">
-          <li>3–5 yrs: BA, PM, solutions consulting, or implementation</li>
-          <li>AI tools: Claude API, Cursor, OpenAI (shipped experience)</li>
-          <li>BRDs, FRDs, UML, data mapping, workflow modeling</li>
-          <li>Stakeholder facilitation, C-suite to engineering</li>
+          <li>Bachelor's degree in CS, Engineering, Business, or equivalent experience</li>
+          <li>3–5 years in business process analysis, program management, solutions or implementation consulting</li>
+          <li>Demonstrated experience shipping with AI tools (Claude API, OpenAI, Cursor, or equivalent)</li>
+          <li>Strong process design: BRDs, FRDs, UML diagrams, data mapping, current and future-state workflow modeling</li>
+          <li>Experience facilitating stakeholder workshops and translating requirements into technical specifications</li>
+          <li>Proven communication with C-suite executives and engineering teams</li>
+          <li>Comfortable in ambiguous, fast-moving environments with evolving objectives</li>
         </ul>
       </div>
 
       <div class="mpl-block">
         <div class="mpl-block-head">Preferred</div>
         <ul class="mpl-list">
-          <li>No-code: Zapier, Airtable, etc.</li>
-          <li>CRM/ERP: Salesforce, Workday, SAP, Zoho</li>
-          <li>SQL / Python basics</li>
-          <li>Portfolio of AI-built artifacts</li>
+          <li>No-code automation: Zapier, Airtable, etc.</li>
+          <li>Mid-market CRM and ERP: Salesforce, Workday, SAP, Zoho</li>
+          <li>Basic SQL or Python for data analysis and prototyping</li>
+          <li>Portfolio of AI-built artifacts or shipped projects</li>
         </ul>
       </div>
     </div>
@@ -691,31 +692,42 @@
     const el2    = document.getElementById('type-line2');
     const cursor = document.getElementById('type-cursor');
 
-    let i = 0;
-    const speed = 55; // ms per character
+    let typed1 = '';
+    let typed2 = '';
+    let phase  = 1; // 1 = line1, 2 = pause, 3 = line2, 4 = done
+    let idx    = 0;
+    const speed = 55;
 
     function typeNext() {
-      if (i < line1Text.length) {
-        el1.textContent += line1Text[i++];
-        setTimeout(typeNext, speed);
-      } else if (i === line1Text.length) {
-        i++;
-        // Brief pause at line break before starting line 2
-        setTimeout(typeNext, 260);
-      } else {
-        const j = i - line1Text.length - 1;
-        if (j < line2Text.length) {
-          el2.textContent += line2Text[j];
-          i++;
+      if (phase === 1) {
+        if (idx < line1Text.length) {
+          typed1 += line1Text[idx++];
+          el1.textContent = typed1;
           setTimeout(typeNext, speed);
         } else {
-          // Done — stop cursor after short delay
-          setTimeout(() => { cursor.style.animation = 'none'; cursor.style.opacity = '0'; }, 1200);
+          phase = 2;
+          // Show cursor on line1 briefly, then move to line2
+          el1.appendChild(cursor);
+          cursor.style.opacity = '1';
+          setTimeout(() => { phase = 3; idx = 0; el2.insertBefore(cursor, el2.firstChild); typeNext(); }, 280);
+        }
+      } else if (phase === 3) {
+        if (idx < line2Text.length) {
+          typed2 += line2Text[idx++];
+          // Insert text node before cursor inside line2
+          el2.firstChild === cursor
+            ? el2.insertBefore(document.createTextNode(''), cursor)
+            : null;
+          el2.childNodes[0].textContent = typed2;
+          setTimeout(typeNext, speed);
+        } else {
+          phase = 4;
+          // Blink briefly then hide cursor
+          setTimeout(() => { cursor.style.animation = 'none'; cursor.style.opacity = '0'; }, 1400);
         }
       }
     }
 
-    // Small delay so page paints first
     setTimeout(typeNext, 220);
   })();
 
