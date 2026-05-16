@@ -368,50 +368,11 @@
       background: var(--indigo); flex-shrink: 0; margin-top: 8px; opacity: 0.5;
     }
 
-    .mpane-right { background: #EBEBEB; padding: 2.5rem 2rem; }
-
-    /* ─────────────────── RESUME PAPER (Times New Roman) ── */
-    .resume-paper {
-      background: #fff; color: #000;
-      font-family: 'Times New Roman', Times, serif;
-      font-size: 10.5pt; line-height: 1.3;
-      padding: 0.6in 0.75in;
-      max-width: 660px; margin: 0 auto;
-      box-shadow: 0 2px 32px rgba(0,0,0,0.15);
-    }
-    .r-hd   { text-align: center; margin-bottom: 4pt; }
-    .r-name { font-size: 18pt; font-weight: 700; margin: 0 0 1pt; letter-spacing: 0.01em; }
-    .r-con  { font-size: 9pt; color: #111; margin: 0 0 1pt; }
-    .r-tag  { font-size: 9.5pt; font-weight: 700; margin: 0; }
-    .r-sec  { margin-top: 7pt; }
-    .r-h2   { font-size: 10pt; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; border-bottom: 1pt solid #000; padding-bottom: 1pt; margin: 0 0 4pt; }
-    .r-edu  { margin-bottom: 4pt; }
-    .r-row  { display: flex; justify-content: space-between; align-items: baseline; gap: 0.5rem; }
-    .r-sch  { font-weight: 700; font-size: 10.5pt; }
-    .r-cty  { font-size: 10pt; white-space: nowrap; flex-shrink: 0; }
-    .r-deg  { font-style: italic; font-size: 10pt; }
-    .r-dt   { font-size: 10pt; white-space: nowrap; flex-shrink: 0; }
-    .r-job  { margin-bottom: 5pt; }
-    .r-jt   { font-size: 10.5pt; font-weight: 700; flex: 1; }
-    .r-js, .r-jl { font-weight: 400; }
-    .r-jd   { font-size: 10pt; white-space: nowrap; flex-shrink: 0; font-weight: 400; }
-    .r-ul   { margin: 1pt 0 0 14pt; padding: 0; list-style: disc; }
-    .r-ul li { font-size: 10pt; margin-bottom: 1pt; line-height: 1.3; }
-    .r-proj { margin-bottom: 4pt; }
-    .r-pn   { font-size: 10.5pt; font-weight: 700; flex: 1; }
-    .r-pd   { font-size: 10pt; white-space: nowrap; flex-shrink: 0; font-weight: 400; }
-    .r-sk   { display: flex; flex-direction: column; gap: 1pt; }
-    .r-sl   { font-size: 10pt; margin: 0; line-height: 1.35; }
-    .r-cr   { display: flex; justify-content: space-between; align-items: baseline; gap: 0.5rem; margin-bottom: 1.5pt; }
-    .r-cn   { font-size: 10pt; font-weight: 700; flex: 1; }
-    .r-cd   { font-size: 10pt; white-space: nowrap; flex-shrink: 0; font-weight: 400; }
-
-    /* ───────────────────────────────────────── PRINT ── */
-    @media print {
-      body > *:not(#pt) { display: none !important; }
-      #pt { display: block !important; }
-      #pt .resume-paper { box-shadow: none; padding: 0.55in 0.7in; }
-      @page { margin: 0.45in; size: letter portrait; }
+    /* PDF iframe fills the right pane completely */
+    .mpane-right { background: #3C3C3C; padding: 0; }
+    .resume-iframe {
+      width: 100%; height: 100%;
+      border: none; display: block;
     }
 
   </style>
@@ -693,122 +654,14 @@
       </div>
     </div>
 
-    <!-- Right: Resume -->
+    <!-- Right: Real PDF resume -->
     <div class="mpane mpane-right">
-      <div class="resume-paper" id="resume-content">
-
-        <div class="r-hd">
-          <p class="r-name">Soumya Singh, PMP, CSPO</p>
-          <p class="r-con">Austin, TX | Open to Relocate &nbsp;|&nbsp; (737) 484-7648 &nbsp;|&nbsp; soumya3436@gmail.com &nbsp;|&nbsp; linkedin.com/in/soumya-ssingh</p>
-          <p class="r-tag">Forward Deployed Solutions Consultant &nbsp;|&nbsp; AI-Native Prototyping &nbsp;|&nbsp; Process Design &amp; Customer Discovery</p>
-        </div>
-
-        <div class="r-sec">
-          <h2 class="r-h2">Education</h2>
-          <div class="r-edu">
-            <div class="r-row"><span class="r-sch">University of Texas at Austin, Cockrell School of Engineering</span><span class="r-cty">Austin, TX</span></div>
-            <div class="r-row"><span class="r-deg">Master of Science in Engineering Management</span><span class="r-dt">Dec 2025</span></div>
-          </div>
-          <div class="r-edu">
-            <div class="r-row"><span class="r-sch">Alliance University, Alliance College of Engineering and Design</span><span class="r-cty">Bengaluru, India</span></div>
-            <div class="r-row"><span class="r-deg">B.Tech. in Computer Science and Engineering</span><span class="r-dt">Aug 2020</span></div>
-          </div>
-        </div>
-
-        <div class="r-sec">
-          <h2 class="r-h2">Experience</h2>
-
-          <div class="r-job">
-            <div class="r-row">
-              <span class="r-jt"><strong>Forward Deployed Solutions Analyst</strong><span class="r-js"> | Saayam For All</span><span class="r-jl">, Remote</span></span>
-              <span class="r-jd">Mar 2026 - Present</span>
-            </div>
-            <ul class="r-ul">
-              <li>Built Job Search AI Platform end-to-end using Claude API, Python, and FastAPI — concept to working prototype in 6 weeks across multi-feature job screening, resume tailoring, and outreach automation.</li>
-              <li>Defined process flows, BRDs, and OpenAPI specs for a multi-feature AI product; translated business requirements into shippable specs across 3 concurrent workstreams at 90% on-time delivery.</li>
-            </ul>
-          </div>
-
-          <div class="r-job">
-            <div class="r-row">
-              <span class="r-jt"><strong>Process &amp; Systems Analyst</strong><span class="r-js"> | University of Texas at Austin - Libraries</span><span class="r-jl">, Austin, TX</span></span>
-              <span class="r-jd">Jan 2025 - Dec 2025</span>
-            </div>
-            <ul class="r-ul">
-              <li>Built a Smartsheet Command Center consolidating schedule, resource capacity, budget, and risk into exec-ready views; automated weekly reporting and improved on-time deliverables by 40%.</li>
-              <li>Reduced rework 42% by documenting data lineage maps and standardized QA checklists across 6,000+ records — adopted org-wide within one quarter.</li>
-            </ul>
-          </div>
-
-          <div class="r-job">
-            <div class="r-row">
-              <span class="r-jt"><strong>Solutions Consultant / Business Analyst</strong><span class="r-js"> | Accenture</span><span class="r-jl">, Bengaluru, India</span></span>
-              <span class="r-jd">Dec 2021 - Oct 2023</span>
-            </div>
-            <ul class="r-ul">
-              <li>Facilitated discovery workshops with 50+ stakeholders across SAP, Salesforce, and Workday implementations; authored BRDs and FRDs for 11+ enterprise releases with zero-ambiguity sign-off.</li>
-              <li>Cut escalations 43% by designing issue-triage protocols for onshore and offshore teams; reduced post-release defects 32% through UAT scripts catching integration gaps before go-live.</li>
-              <li>Drove Azure migration by translating business requirements into technical epics in Azure DevOps — improving deployment reliability 30% across 18 months of production delivery.</li>
-            </ul>
-          </div>
-
-          <div class="r-job">
-            <div class="r-row">
-              <span class="r-jt"><strong>Solutions Consultant, Pre-Sales</strong><span class="r-js"> | Zoho Corporation</span><span class="r-jl">, Chennai, India</span></span>
-              <span class="r-jd">Sep 2021 - Nov 2021</span>
-            </div>
-            <ul class="r-ul">
-              <li>Improved time-to-resolution 13% and customer retention 20% through CRM onboarding workflows and reusable process documentation across 1,000+ enterprise cases.</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="r-sec">
-          <h2 class="r-h2">Leadership Programs and Projects</h2>
-          <div class="r-proj">
-            <div class="r-row">
-              <strong class="r-pn">Job Search AI Platform — Claude API, Python, FastAPI &amp; React</strong>
-              <span class="r-pd">Apr 2026</span>
-            </div>
-            <ul class="r-ul">
-              <li>Full-stack AI platform with multi-feature job screening, resume tailoring, and LinkedIn outreach automation — end-to-end from discovery to deployed prototype.</li>
-            </ul>
-          </div>
-          <div class="r-proj">
-            <div class="r-row">
-              <strong class="r-pn">Integration Control Center — End-to-End Data Pipeline &amp; Systems Design</strong>
-              <span class="r-pd">Mar 2026</span>
-            </div>
-            <ul class="r-ul">
-              <li>Designed full system: BRD, FRD, OpenAPI specs, SQL data model, and UAT pack using PostgreSQL, Apache NiFi, and Tableau.</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="r-sec">
-          <h2 class="r-h2">Skills</h2>
-          <div class="r-sk">
-            <p class="r-sl"><strong>AI &amp; Prototyping:</strong> Claude API, Python, FastAPI, React, Cursor, v0, GitHub Copilot, OpenAI API, Microsoft Copilot</p>
-            <p class="r-sl"><strong>Process Design:</strong> BRD / FRD, UML, Process Mapping, Data Flow Diagrams, Current &amp; Future State Design, User Journey Maps</p>
-            <p class="r-sl"><strong>Client Delivery:</strong> Discovery Workshops, Stakeholder Facilitation, Requirements Elicitation, Change Management, UAT, Go-Live Readiness</p>
-            <p class="r-sl"><strong>Platforms &amp; Tools:</strong> Salesforce CRM, SAP ERP, Workday, Zoho CRM, ServiceNow, Jira, Confluence, Smartsheet, SQL, Power BI, Tableau, Azure DevOps</p>
-          </div>
-        </div>
-
-        <div class="r-sec">
-          <h2 class="r-h2">Certifications</h2>
-          <div class="r-cr">
-            <strong class="r-cn">Project Management Professional (PMP®), Project Management Institute</strong>
-            <span class="r-cd">Oct 2025</span>
-          </div>
-          <div class="r-cr">
-            <strong class="r-cn">Certified Scrum Product Owner (CSPO®), Scrum Alliance</strong>
-            <span class="r-cd">Jun 2025</span>
-          </div>
-        </div>
-
-      </div><!-- /resume-paper -->
-    </div><!-- /mpane-right -->
+      <iframe
+        class="resume-iframe"
+        src="Soumya_Singh_FDSE_thinkbridge.pdf"
+        title="Soumya Singh — Forward Deployed Solutions Consultant"
+      ></iframe>
+    </div>
 
   </div><!-- /modal-split -->
 </div><!-- /overlay -->
@@ -830,10 +683,12 @@
 
   /* PDF */
   function downloadPDF() {
-    const t = document.getElementById('pt');
-    t.innerHTML = document.getElementById('resume-content').outerHTML;
-    t.style.display = 'block';
-    setTimeout(() => { window.print(); setTimeout(() => { t.style.display = 'none'; }, 500); }, 100);
+    const a = document.createElement('a');
+    a.href = 'Soumya_Singh_FDSE_thinkbridge.pdf';
+    a.download = 'Soumya_Singh_FDSE_thinkbridge.pdf';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
   }
 </script>
 </body>
